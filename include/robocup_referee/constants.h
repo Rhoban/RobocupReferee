@@ -66,6 +66,7 @@ public:
 
   /* Penalties */
   static const short PENALTY_NONE = 0;
+  static const short PENALTY_SUBSTITUTE = 14;
 
   /* DURATIONS (in seconds) */
   /* Game informations */
