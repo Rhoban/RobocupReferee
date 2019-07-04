@@ -23,6 +23,11 @@ void RefereeClient::start()
   thread = new std::thread(&RefereeClient::execute, this);
 }
 
+bool RefereeClient::isIPValid(std::string ip)
+{
+  return true;
+}
+
 void RefereeClient::execute(void)
 {
   rhoban_utils::UDPBroadcast broadcast(_portNo, _portSend);
@@ -35,10 +40,14 @@ void RefereeClient::execute(void)
   {
     usleep(1000);
     size_t n = 1024;
-    if (broadcast.checkMessage((unsigned char*)buffer, n))
+    std::string ip;
+    if (broadcast.checkMessage((unsigned char*)buffer, n, &ip))
     {
-      buffer[n] = '\0';
-      _gamedata.update_from_message(buffer);
+      if (isIPValid(ip))
+      {
+        buffer[n] = '\0';
+        _gamedata.update_from_message(buffer);
+      }
     }
 
     // Answering referee at 1hz

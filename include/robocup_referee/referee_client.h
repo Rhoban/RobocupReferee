@@ -26,6 +26,7 @@ public:
 
   void start();
   virtual void execute(void);
+  virtual bool isIPValid(std::string ip);
   void setState(uint8_t teamId, uint8_t myId, uint8_t message);
   uint8_t _myTeamId;
   uint8_t _myId;
