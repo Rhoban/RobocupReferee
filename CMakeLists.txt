@@ -1,19 +1,8 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.16.3)
 project(robocup_referee)
-
-## Find catkin macros and lib
-find_package(catkin REQUIRED COMPONENTS rhoban_utils hl_monitoring)
 
 ## Building the main
 option (BUILD_REFEREE_BIN "Build referee binary" OFF)
-
-catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES robocup_referee
-  CATKIN_DEPENDS rhoban_utils hl_monitoring
-)
-
-include_directories(include ${catkin_INCLUDE_DIRS})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra")
 
@@ -28,7 +17,10 @@ set(SOURCES
 )
 
 add_library(robocup_referee ${SOURCES})
-target_link_libraries (robocup_referee ${catkin_LIBRARIES})
+target_link_libraries (robocup_referee PUBLIC rhoban_utils hl_monitoring)
+target_include_directories(robocup_referee PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
 
 if (BUILD_REFEREE_BIN)
     add_executable (referee src/main.cpp)
