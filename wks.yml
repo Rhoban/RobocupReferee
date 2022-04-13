@@ -1,4 +1,4 @@
 deps:
-  - rhoban/utils#wks
-  - rhoban/hl_monitoring#wks
+  - rhoban/utils
+  - rhoban/hl_monitoring
 
