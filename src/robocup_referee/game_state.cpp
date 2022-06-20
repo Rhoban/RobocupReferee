@@ -147,6 +147,18 @@ const Team& GameState::getTeam(int teamNumber) const
   return m_team[teamNumber];
 }
 
+const Team& GameState::getTeamById(int teamId) const
+{
+  for (int k = 0; k < getNbTeam(); k++)
+  {
+    const Team& team = getTeam(k);
+    if (team.getTeamNumber() == teamId)
+      return m_team[k];
+  }
+
+  throw std::runtime_error("teamid does not exist");
+}
+
 ostream& operator<<(ostream& flux, GameState const* gs)
 {
   flux << "time since last update : ";

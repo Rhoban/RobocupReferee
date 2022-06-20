@@ -72,4 +72,5 @@ ostream& operator<<(ostream& flux, Team const& t)
   }
   return flux;
 }
+
 }  // namespace robocup_referee
