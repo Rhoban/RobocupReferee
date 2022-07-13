@@ -25,4 +25,7 @@ target_include_directories(robocup_referee PUBLIC
 if (BUILD_REFEREE_BIN)
     add_executable (referee src/main.cpp)
     target_link_libraries (referee robocup_referee pthread)
+
+    add_executable (dump_referees src/dump_referees.cpp)
+    target_link_libraries (dump_referees robocup_referee pthread)
 endif ()
