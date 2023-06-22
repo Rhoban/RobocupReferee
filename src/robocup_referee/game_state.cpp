@@ -147,6 +147,17 @@ const Team& GameState::getTeam(int teamNumber) const
   return m_team[teamNumber];
 }
 
+const bool GameState::hasTeam(int teamId) const
+{
+  for (int k = 0; k < getNbTeam(); k++)
+  {
+    const Team& team = getTeam(k);
+    if (team.getTeamNumber() == teamId)
+      return true;
+  }
+  return false;
+}
+
 const Team& GameState::getTeamById(int teamId) const
 {
   for (int k = 0; k < getNbTeam(); k++)

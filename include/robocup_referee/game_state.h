@@ -38,6 +38,7 @@ public:
   int getGameType() const;
   const Team& getTeam(int teamNumber) const;
   const Team& getTeamById(int teamId) const;
+  const bool hasTeam(int teamId) const;
 
   /*! \brief Update the robot from a referee box message
    * return true if there has been an update and false if
