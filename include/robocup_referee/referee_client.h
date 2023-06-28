@@ -10,7 +10,7 @@ namespace robocup_referee
 {
 class RefereeClient
 {
-private:
+protected:
   GameState _gamedata;
 
 protected:

@@ -194,4 +194,16 @@ ostream& operator<<(ostream& flux, GameState const* gs)
   return flux;
 }
 
+void GameState::update_actual_game_state(int actual_game_state)
+{
+  m_actual_game_state = actual_game_state;
+  m_last_game_state_update.update();
+}
+
+void GameState::set_kickoff_team(int kick_off_team)
+{
+  m_kick_off_team = kick_off_team;
+  m_last_game_state_update.update();
+}
+
 }  // namespace robocup_referee
