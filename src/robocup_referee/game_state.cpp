@@ -35,6 +35,7 @@ GameState::~GameState()
 {
 }
 
+
 /* Use a broadcasted message to update the GameState */
 bool GameState::update_from_message(char const* message)
 {
@@ -66,6 +67,13 @@ bool GameState::update_from_message(char const* message)
     m_team[i].update_from_message(message + 24, i);
   return true;
 }
+
+void GameState::set_params(int team1_id, int team2_id, int nb1, int nb2)
+{
+  m_team[0].set_params(team1_id, nb1);
+  m_team[1].set_params(team2_id, nb2);
+}
+  
 
 /* GETTERS */
 int GameState::getLastUpdate() const
@@ -220,13 +228,16 @@ void GameState::set_secondary_mode(int second_state, int secondary_team, int sec
 
 void GameState::set_penalized(int team_id, int player_id, bool is_penalized)
 {
+  std::cout << "Trying to set penalty for team_id player_id " << team_id << " " << player_id << std::endl; 
   forcePresent = true;
+  int id = player_id - 1;
   for (int i = 0; i < NB_TEAMS; i++)
   {
     auto& team = m_team[i];
-    if (team_id == team.getTeamNumber() && 0 <= player_id && player_id < team.getNbRobots())
+    if (team_id == team.getTeamNumber() && 0 <= id && id < team.getNbRobots())
     {
-      Robot* robot = team.getRobotRef(player_id);
+      std::cout << "OK Setting penalty team_id player_id " << team_id << " " << player_id << std::endl; 
+      Robot* robot = team.getRobotRef(id);
       robot->set_penalized(is_penalized);
     }
   }

@@ -31,6 +31,9 @@ public:
 
   Robot* getRobotRef(int robot);
 
+  /* used in simu */
+  void set_params(int team_id, int nb);
+  /* end used in simu */
 private:
   int m_team_number;
   int m_team_color;

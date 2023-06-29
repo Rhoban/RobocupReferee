@@ -48,6 +48,9 @@ public:
   /*! \brief update game state from rhio */
   void set_game_state(int actual_game_state);
 
+  /* Used in simu */
+  void set_params(int team1_id, int team2_id, int nb1, int nb2);
+  
   void set_kickoff_team(int kick_off_team);
 
   void set_secondary_mode(int second_state, int secondary_team, int m_secondary_secs);
@@ -55,7 +58,8 @@ public:
   void set_penalized(int team_id, int player_id, bool is_penalized);
 
   void show(std::ostream& flux) const;
-
+  /* Finished used in simu */
+  
 private:
   TimeStamp m_last_game_state_update;
   int m_struct_version;
@@ -72,6 +76,7 @@ private:
   int m_secondary_team;
   int m_secondary_mode;
   Team m_team[NB_TEAMS];
+  bool forcePresent;
 };
 
 std::ostream& operator<<(std::ostream& flux, GameState const* myGameState);

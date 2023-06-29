@@ -80,4 +80,5 @@ ostream& operator<<(ostream& flux, const Robot& r)
   return flux;
 }
 
+  
 }  // namespace robocup_referee

@@ -65,6 +65,10 @@ void Team::update_from_message(char const* message, int numTeam)
   }
 }
 
+void Team::set_params(int team_id, int nb) {
+  m_team_number = team_id;
+}
+  
 ostream& operator<<(ostream& flux, Team const& t)
 {
   flux << '\t' << "team_number : " << t.getTeamNumber() << endl;
