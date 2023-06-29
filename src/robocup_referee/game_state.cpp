@@ -28,6 +28,7 @@ GameState::GameState()
   m_estimated_secs = -1;
   m_secondary_team = -1;
   m_secondary_mode = -1;
+  forcePresent = false;
 }
 
 GameState::~GameState()
@@ -69,7 +70,7 @@ bool GameState::update_from_message(char const* message)
 /* GETTERS */
 int GameState::getLastUpdate() const
 {
-  return m_last_game_state_update.elapsed_time();
+  return forcePresent ? 0 : m_last_game_state_update.elapsed_time();
 }
 
 int GameState::getStructVersion() const
@@ -196,18 +197,21 @@ ostream& operator<<(ostream& flux, GameState const* gs)
 
 void GameState::set_game_state(int actual_game_state)
 {
+  forcePresent = true;
   m_actual_game_state = actual_game_state;
   m_last_game_state_update.update();
 }
 
 void GameState::set_kickoff_team(int kick_off_team)
 {
+  forcePresent = true;
   m_kick_off_team = kick_off_team;
   m_last_game_state_update.update();
 }
 
 void GameState::set_secondary_mode(int second_state, int secondary_team, int secondary_secs)
 {
+  forcePresent = true;
   m_secondary_secs = secondary_secs;
   m_secondary_team = secondary_team;
   m_secondary_secs = secondary_secs;
@@ -216,6 +220,7 @@ void GameState::set_secondary_mode(int second_state, int secondary_team, int sec
 
 void GameState::set_penalized(int team_id, int player_id, bool is_penalized)
 {
+  forcePresent = true;
   for (int i = 0; i < NB_TEAMS; i++)
   {
     auto& team = m_team[i];
