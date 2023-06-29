@@ -228,7 +228,6 @@ void GameState::set_secondary_mode(int second_state, int secondary_team, int sec
 
 void GameState::set_penalized(int team_id, int player_id, bool is_penalized)
 {
-  std::cout << "Trying to set penalty for team_id player_id " << team_id << " " << player_id << std::endl; 
   forcePresent = true;
   int id = player_id - 1;
   for (int i = 0; i < NB_TEAMS; i++)
@@ -236,7 +235,6 @@ void GameState::set_penalized(int team_id, int player_id, bool is_penalized)
     auto& team = m_team[i];
     if (team_id == team.getTeamNumber() && 0 <= id && id < team.getNbRobots())
     {
-      std::cout << "OK Setting penalty team_id player_id " << team_id << " " << player_id << std::endl; 
       Robot* robot = team.getRobotRef(id);
       robot->set_penalized(is_penalized);
     }
