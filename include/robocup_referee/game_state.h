@@ -45,17 +45,14 @@ public:
    * the message was discarded (invalid struct version) */
   bool update_from_message(char const* message);
 
-  /*! \brief update actual game state from rhio
-     *Game states from Constants.h, now
-        static const int STATE_INITIAL = 0;
-        static const int STATE_READY = 1;
-        static const int STATE_SET = 2;
-        static const int STATE_PLAYING = 3;
-        static const int STATE_FINISHED = 4;
-  */
-  void update_actual_game_state(int actual_game_state);
+  /*! \brief update game state from rhio */
+  void set_game_state(int actual_game_state);
 
   void set_kickoff_team(int kick_off_team);
+
+  void set_secondary_mode(int second_state, int secondary_team, int m_secondary_secs);
+
+  void set_penalized(int team_id, int player_id, bool is_penalized);
 
   void show(std::ostream& flux) const;
 

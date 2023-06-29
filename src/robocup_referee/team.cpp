@@ -47,6 +47,11 @@ const Robot& Team::getRobot(int robot) const
   return m_robots[robot];
 }
 
+Robot* Team::getRobotRef(int robot)
+{
+  return &m_robots[robot];
+}
+
 /* Use a broadcasted message to update the Robot */
 void Team::update_from_message(char const* message, int numTeam)
 {

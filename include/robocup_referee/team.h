@@ -29,6 +29,8 @@ public:
   /*! \brief Update the robot from a referee box message */
   void update_from_message(char const* message, int numTeam);
 
+  Robot* getRobotRef(int robot);
+
 private:
   int m_team_number;
   int m_team_color;

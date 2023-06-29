@@ -31,6 +31,9 @@ public:
   /*! \brief Update the robot from a referee box message */
   void update_from_message(char const* message, int numRobot);
 
+  /*! \brief set penalty (used in simu) */
+  void set_penalized(bool is_penalized);
+
 private:
   int m_penalty;
   int m_secs_till_unpenalised;
@@ -40,6 +43,6 @@ private:
   bool m_goal_keeper;
 };
 
-std::ostream& operator<<(std::ostream& flux, Robot const& myRobot);
+std::ostream& operator<<(std::ostream& flux, const Robot& myRobot);
 
 }  // namespace robocup_referee

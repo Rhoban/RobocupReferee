@@ -63,7 +63,13 @@ void Robot::update_from_message(char const* message, int numRobot)
   m_goal_keeper = (chars_to_int(message, d + 5, d + 6) != 0);
 }
 
-ostream& operator<<(ostream& flux, Robot const& r)
+void Robot::set_penalized(bool is_penalized)
+{
+  m_penalty = is_penalized ? Constants::PENALTY_SUBSTITUTE : Constants::PENALTY_NONE;
+  m_secs_till_unpenalised = is_penalized ? 30 : 0;
+}
+
+ostream& operator<<(ostream& flux, const Robot& r)
 {
   flux << "\t\tpenalty : " << r.getPenalty() << endl;
   flux << "\t\tsecs_till_unpenalised : " << r.getSecsTillUnpenalised() << endl;

@@ -194,7 +194,7 @@ ostream& operator<<(ostream& flux, GameState const* gs)
   return flux;
 }
 
-void GameState::update_actual_game_state(int actual_game_state)
+void GameState::set_game_state(int actual_game_state)
 {
   m_actual_game_state = actual_game_state;
   m_last_game_state_update.update();
@@ -204,6 +204,27 @@ void GameState::set_kickoff_team(int kick_off_team)
 {
   m_kick_off_team = kick_off_team;
   m_last_game_state_update.update();
+}
+
+void GameState::set_secondary_mode(int second_state, int secondary_team, int secondary_secs)
+{
+  m_secondary_secs = secondary_secs;
+  m_secondary_team = secondary_team;
+  m_secondary_secs = secondary_secs;
+  m_last_game_state_update.update();
+}
+
+void GameState::set_penalized(int team_id, int player_id, bool is_penalized)
+{
+  for (int i = 0; i < NB_TEAMS; i++)
+  {
+    auto& team = m_team[i];
+    if (team_id == team.getTeamNumber() && 0 <= player_id && player_id < team.getNbRobots())
+    {
+      Robot* robot = team.getRobotRef(player_id);
+      robot->set_penalized(is_penalized);
+    }
+  }
 }
 
 }  // namespace robocup_referee
