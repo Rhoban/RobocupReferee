@@ -66,7 +66,7 @@ void Robot::update_from_message(char const* message, int numRobot)
 void Robot::set_penalized(bool is_penalized)
 {
   m_penalty = is_penalized ? Constants::PENALTY_SUBSTITUTE : Constants::PENALTY_NONE;
-  m_secs_till_unpenalised = is_penalized ? 30 : 0;
+  m_secs_till_unpenalised = is_penalized ? 30 : -1;
 }
 
 ostream& operator<<(ostream& flux, const Robot& r)
