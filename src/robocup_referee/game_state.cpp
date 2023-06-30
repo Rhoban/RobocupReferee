@@ -229,7 +229,7 @@ void GameState::set_secondary_mode(int second_state, int secondary_team, int sec
 void GameState::set_penalized(int team_id, int player_id, bool is_penalized)
 {
   forcePresent = true;
-  int id = player_id - 1;
+  int id = player_id;
   for (int i = 0; i < NB_TEAMS; i++)
   {
     auto& team = m_team[i];

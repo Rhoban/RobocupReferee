@@ -15,6 +15,10 @@ Robot::Robot()
 {
   m_penalty = 0;
   m_secs_till_unpenalised = 0;
+  m_warnings_count = 0;
+  m_yellow_card_count = 0;
+  m_red_card_count = 0;
+  m_goal_keeper = false;
 }
 
 Robot::~Robot()
