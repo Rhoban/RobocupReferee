@@ -16,13 +16,14 @@ protected:
 protected:
   std::thread* thread;
   int _portNo, _portSend;
+  bool _mustQuit;
 
 public:
   static const int protocolVersion = 12;
   static const int protocolReturnVersion = 2;
 
   RefereeClient(int portNo = 3838, int portSend = 3939) : _portNo(portNo), _portSend(portSend){};
-  virtual ~RefereeClient(){};
+  virtual ~RefereeClient();
 
   void start();
   virtual void execute(void);

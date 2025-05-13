@@ -16,10 +16,16 @@
 
 namespace robocup_referee
 {
+
+RefereeClient::~RefereeClient(){
+  _mustQuit=true;
+}
+
 void RefereeClient::start()
 {
   _myTeamId = 0;
   _myId = 0;
+  _mustQuit=false;
   thread = new std::thread(&RefereeClient::execute, this);
 }
 
@@ -36,7 +42,7 @@ void RefereeClient::execute(void)
   char buffer[1024];
   TimeStamp last;
 
-  while (1)
+  while (_mustQuit==false)
   {
     usleep(1000);
     size_t n = 1024;
