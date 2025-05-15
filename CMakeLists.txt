@@ -16,7 +16,7 @@ set(SOURCES
   src/robocup_referee/utilities.cpp
 )
 
-add_library(robocup_referee ${SOURCES})
+add_library(robocup_referee SHARED ${SOURCES})
 target_link_libraries (robocup_referee PUBLIC rhoban_utils hl_monitoring)
 target_include_directories(robocup_referee PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
