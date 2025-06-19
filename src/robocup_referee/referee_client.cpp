@@ -13,19 +13,21 @@
 #include <stdlib.h>
 
 #include "robocup_referee/time_stamp.h"
+#include "rhoban_utils/sockets/udp_unicast.h"
 
 namespace robocup_referee
 {
 
-RefereeClient::~RefereeClient(){
-  _mustQuit=true;
+RefereeClient::~RefereeClient()
+{
+  _mustQuit = true;
 }
 
 void RefereeClient::start()
 {
   _myTeamId = 0;
   _myId = 0;
-  _mustQuit=false;
+  _mustQuit = false;
   thread = new std::thread(&RefereeClient::execute, this);
 }
 
@@ -37,12 +39,14 @@ bool RefereeClient::isIPValid(std::string ip)
 void RefereeClient::execute(void)
 {
   rhoban_utils::UDPBroadcast broadcast(_portNo, _portSend);
+  rhoban_utils::UDPUnicast send_unicast;
   std::cout << "Referee Client started" << std::endl;
 
   char buffer[1024];
   TimeStamp last;
+  std::string gamecontroller_ip = "";
 
-  while (_mustQuit==false)
+  while (_mustQuit == false)
   {
     usleep(1000);
     size_t n = 1024;
@@ -51,13 +55,14 @@ void RefereeClient::execute(void)
     {
       if (isIPValid(ip))
       {
+        gamecontroller_ip = ip;
         buffer[n] = '\0';
         _gamedata.update_from_message(buffer);
       }
     }
 
     // Answering referee at 1hz
-    if (_myId != 0 && last.elapsed_time() > 100)
+    if (_myId != 0 && last.elapsed_time() > 100 && gamecontroller_ip != "")
     {
       last = TimeStamp();
       uint8_t returnData[8];
@@ -70,7 +75,7 @@ void RefereeClient::execute(void)
       returnData[6] = _myId;
       returnData[7] = _message;
 
-      broadcast.broadcastMessage(returnData, 8);
+      send_unicast.send(gamecontroller_ip, _portSend, returnData, 8);
     }
   }
 }
