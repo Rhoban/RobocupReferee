@@ -9,7 +9,7 @@
 
 namespace robocup_referee
 {
-hl_monitoring::Field Constants::field;
+//hl_monitoring::Field Constants::field;
 
 /* Classes and messages size */
 const int Constants::nb_chars_by_robot = 6;

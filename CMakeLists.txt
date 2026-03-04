@@ -17,9 +17,9 @@ set(SOURCES
 )
 
 add_library(robocup_referee SHARED ${SOURCES})
-target_link_libraries (robocup_referee PUBLIC rhoban_utils hl_monitoring)
+target_link_libraries (robocup_referee PUBLIC rhoban_utils)
 target_include_directories(robocup_referee PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
 if (BUILD_REFEREE_BIN)

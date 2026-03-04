@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include <hl_monitoring/field.h>
+//#include <hl_monitoring/field.h>
 
 namespace robocup_referee
 {
@@ -19,7 +19,7 @@ class Constants
 {
 public:
   /// Containing all the dimensions of the field
-  static hl_monitoring::Field field;
+//  static hl_monitoring::Field field;
 
   /* Headers informations */
   static const int header_length = 4;
