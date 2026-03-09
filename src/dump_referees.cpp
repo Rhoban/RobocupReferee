@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <map>
 
 #include <robocup_referee/referee_client.h>
 #include "rhoban_utils/timing/time_stamp.h"
