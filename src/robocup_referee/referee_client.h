@@ -26,6 +26,9 @@ public:
   virtual ~RefereeClient();
 
   void start();
+  /*! method called during thread loop alowing sublasses to do some work.
+  */
+  virtual void tick();
   virtual void execute(void);
   virtual bool isIPValid(std::string ip);
   void setState(uint8_t teamId, uint8_t myId, uint8_t message);

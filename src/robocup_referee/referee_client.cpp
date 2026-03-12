@@ -36,6 +36,9 @@ bool RefereeClient::isIPValid(std::string ip)
   return true;
 }
 
+
+void RefereeClient::tick(){}
+
 void RefereeClient::execute(void)
 {
   rhoban_utils::UDPBroadcast broadcast(_portNo, _portSend);
@@ -77,6 +80,7 @@ void RefereeClient::execute(void)
 
       send_unicast.send(gamecontroller_ip, _portSend, returnData, 8);
     }
+    tick();
   }
 }
 
