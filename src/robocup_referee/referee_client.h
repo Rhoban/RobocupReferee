@@ -3,15 +3,15 @@
 #include <string>
 #include <thread>
 
-#include "robocup_referee/game_state.h"
 #include "rhoban_utils/sockets/udp_broadcast.h"
+#include "robocup_referee/gc_msg.h"
 
 namespace robocup_referee
 {
 class RefereeClient
 {
 protected:
-  GameState _gamedata;
+  GCMsg _gamedata;
 
 protected:
   std::thread* thread;
@@ -30,13 +30,13 @@ public:
   */
   virtual void tick();
   virtual void execute(void);
-  virtual bool isIPValid(std::string ip);
+  virtual bool isIPValid(const std::string &ip);
   void setState(uint8_t teamId, uint8_t myId, uint8_t message);
   uint8_t _myTeamId;
   uint8_t _myId;
   uint8_t _message;
 
-  GameState& getGameState();
+  GCMsg& getGameState();
 };
 
 }  // namespace robocup_referee

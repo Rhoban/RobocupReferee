@@ -14,6 +14,7 @@
 
 #include "robocup_referee/time_stamp.h"
 #include "rhoban_utils/sockets/udp_unicast.h"
+#include "robocup_referee/gc_msg.h"
 
 namespace robocup_referee
 {
@@ -31,7 +32,7 @@ void RefereeClient::start()
   thread = new std::thread(&RefereeClient::execute, this);
 }
 
-bool RefereeClient::isIPValid(std::string ip)
+bool RefereeClient::isIPValid(const std::string &ip)
 {
   return true;
 }
@@ -60,27 +61,23 @@ void RefereeClient::execute(void)
       {
         gamecontroller_ip = ip;
         buffer[n] = '\0';
-        _gamedata.update_from_message(buffer);
+        _gamedata.update_from_message(buffer,n);
       }
     }
 
     // Answering referee at 1hz
     if (_myId != 0 && last.elapsed_time() > 100 && gamecontroller_ip != "")
     {
-      last = TimeStamp();
-      uint8_t returnData[8];
-      returnData[0] = 'R';
-      returnData[1] = 'G';
-      returnData[2] = 'r';
-      returnData[3] = 't';
-      returnData[4] = protocolReturnVersion;
-      returnData[5] = _myTeamId;
-      returnData[6] = _myId;
-      returnData[7] = _message;
-
-      send_unicast.send(gamecontroller_ip, _portSend, returnData, 8);
+      last=TimeStamp();
+      RoboCupGameControlReturnData m;
+      m.teamNum = _myTeamId;
+      m.playerNum = _myId;
+      m.fallen=0;
+      // other field to set: ball / pose / balle age
+    
+      send_unicast.send(gamecontroller_ip, _portSend, (unsigned char *)&m, sizeof(m));
     }
-    tick();
+    tick(); // subclass tick call
   }
 }
 
@@ -88,10 +85,10 @@ void RefereeClient::setState(uint8_t teamId, uint8_t myId, uint8_t message)
 {
   _myTeamId = teamId;
   _myId = myId;
-  _message = message = message;
+  _message = message ;
 }
 
-GameState& RefereeClient::getGameState()
+GCMsg& RefereeClient::getGameState()
 {
   return _gamedata;
 }

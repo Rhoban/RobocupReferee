@@ -8,12 +8,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra")
 
 set(SOURCES
   src/robocup_referee/constants.cpp
-  src/robocup_referee/game_state.cpp
+  #src/robocup_referee/game_state.cpp
   src/robocup_referee/referee_client.cpp
   src/robocup_referee/robot.cpp
   src/robocup_referee/team.cpp
   src/robocup_referee/time_stamp.cpp
   src/robocup_referee/utilities.cpp
+  src/robocup_referee/gc_msg.cpp
 )
 
 add_library(robocup_referee SHARED ${SOURCES})
@@ -23,9 +24,12 @@ target_include_directories(robocup_referee PUBLIC
 )
 
 if (BUILD_REFEREE_BIN)
-    add_executable (referee src/main.cpp)
+    add_executable (referee src/main_referee.cpp)
     target_link_libraries (referee robocup_referee pthread)
 
     add_executable (dump_referees src/dump_referees.cpp)
+    target_link_libraries (dump_referees robocup_referee pthread)
+
+    add_executable (dump_gc_broadcast src/dump_gc_broadcast.cpp)
     target_link_libraries (dump_referees robocup_referee pthread)
 endif ()

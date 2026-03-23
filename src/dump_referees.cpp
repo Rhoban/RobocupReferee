@@ -4,6 +4,7 @@
 
 #include <robocup_referee/referee_client.h>
 #include "rhoban_utils/timing/time_stamp.h"
+#include "robocup_referee/gc_msg.h"
 
 using namespace std;
 using namespace robocup_referee;
@@ -25,9 +26,11 @@ int main()
     if (broadcast.checkMessage((unsigned char*)buffer, n, &ip))
     {
       referees[ip] = rhoban_utils::TimeStamp::now();
-
       system("clear");
+      GCMsg msg(buffer, n);
       std::cout << "Game controllers:" << std::endl;
+      std::cout << "---------------" << std::endl;
+      std::cout << msg.to_string() << std::endl;
       for (auto& entry : referees)
       {
         double elapsed = diffMs(referees[ip], rhoban_utils::TimeStamp::now());

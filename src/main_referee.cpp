@@ -21,7 +21,8 @@ int main()
       std::cerr << "Failed to clear terminal" << std::endl;
       exit(EXIT_FAILURE);
     }
-    std::cout << &client.getGameState() << std::endl;
+    client.setState(11, 1, 0);
+    std::cout << client.getGameState().to_string() << std::endl;
     sleep(1);
   }
 
