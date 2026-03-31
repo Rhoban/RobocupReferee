@@ -9,10 +9,14 @@ using namespace robocup_referee;
 /**
  * This just dumps the informations from the referee client
  */
-int main()
+int main(int argc, char** argv)
 {
   RefereeClient client;
+  int teamId = 11;
+  int id = 1;
   client.start();
+  if (argc>1) teamId = atoi(argv[1]);
+  if (argc>2) id = atoi(argv[2]);
 
   while (true)
   {
@@ -21,7 +25,7 @@ int main()
       std::cerr << "Failed to clear terminal" << std::endl;
       exit(EXIT_FAILURE);
     }
-    client.setState(11, 1, 0);
+    client.setState(teamId, id, 0);
     std::cout << client.getGameState().to_string() << std::endl;
     sleep(1);
   }
