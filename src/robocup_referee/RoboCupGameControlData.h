@@ -38,12 +38,12 @@
 #define STATE_FINISHED 4
 
 #define SET_PLAY_NONE               0
-#define SET_PLAY_DIRECT_FREE_KICK   1
-#define SET_PLAY_INDIRECT_FREE_KICK 2
-#define SET_PLAY_PENALTY_KICK       3
-#define SET_PLAY_THROW_IN           4
-#define SET_PLAY_GOAL_KICK          5
-#define SET_PLAY_CORNER_KICK        6
+#define SET_PLAY_DIRECT_FREE_KICK   1 // direct
+#define SET_PLAY_INDIRECT_FREE_KICK 2 // indirect
+#define SET_PLAY_PENALTY_KICK       3 // direct
+#define SET_PLAY_THROW_IN           4 // indirect
+#define SET_PLAY_GOAL_KICK          5 // direct
+#define SET_PLAY_CORNER_KICK        6 // direct
 
 #define KICKING_TEAM_NONE 255
 
@@ -93,7 +93,7 @@ struct RoboCupGameControlData
   uint8_t gamePhase;        // phase of the game (GAME_PHASE_NORMAL, etc)
   uint8_t state;            // state of the game (STATE_INITIAL, etc)
   uint8_t setPlay;          // active set play (SET_PLAY_NONE, etc)
-  uint8_t firstHalf;        // 1 = game in first half, 0 otherwise
+  uint8_t firstHalf;        // 1 = gActioname in first half, 0 otherwise
   uint8_t kickingTeam;      // the team number of the next team to kick-off, free kick etc, or KICKING_TEAM_NONE
   int16_t secsRemaining;    // estimate of number of seconds remaining in the half
   int16_t secondaryTime;    // number of seconds shown as secondary time (remaining ready, until free ball, etc)

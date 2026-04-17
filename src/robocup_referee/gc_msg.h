@@ -12,9 +12,9 @@ class GCMsg : public RoboCupGameControlData
         GCMsg(const char* buffer,int n);
         ~GCMsg();
         
-        void update_from_message(const char* buffer,int n);
+        void update_from_message(const char* buffer,unsigned int n);
         std::string to_string() const;
-        int getLastUpdate() const;
+        double getLastUpdate() const;
         TimeStamp last_update;
 
         bool hasTeam(int teamId) const;

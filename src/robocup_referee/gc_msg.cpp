@@ -21,18 +21,20 @@ GCMsg::~GCMsg()
 {
 }
 
-int GCMsg::getLastUpdate() const{
-    return last_update.elapsed_time();
+double GCMsg::getLastUpdate() const{
+    return last_update.elapsed_time()/100.0;
 }
 
-void GCMsg::update_from_message(const char* buffer,int n)
+void GCMsg::update_from_message(const char* buffer,unsigned int n)
 {
     //memcpy(header,buffer,sizeof(header));
     //  uint8_t* data = (uint8_t*)(buffer + sizeof(header));
     //int i=0;
     //std::cout<<sizeof(RoboCupGameControlData)<<" vs "<<n<<std::endl;
-    memcpy(header,buffer,sizeof(RoboCupGameControlData));
-    last_update.update();
+    if (n>=sizeof(RoboCupGameControlData))  {
+        memcpy(header,buffer,sizeof(RoboCupGameControlData));
+        last_update.update();
+    }
 }
 
 bool GCMsg::hasTeam(int teamId) const{
@@ -82,8 +84,8 @@ case TEAM_GRAY:   return "gray";
 std::string GCMsg::to_string() const
 {
     std::ostringstream m;
-    m << "version : " << (int)version << " / packetNumber : " << (int)packetNumber << std::endl;
-    m << "playersPerTeam : " << (int)playersPerTeam << (playersPerTeam==3?" fondation":" advance") ;
+    m << "version : " << (int)version << " / packetNumber : " << (int)packetNumber ;
+    m << " / playersPerTeam : " << (int)playersPerTeam << (playersPerTeam==3?" fondation":" advance") ;
 
     m << " / competitionType : " << (int)competitionType ;
     if (competitionType == COMPETITION_TYPE_SMALL)
@@ -142,22 +144,30 @@ std::string GCMsg::to_string() const
     m << "secondaryTime : " << secondaryTime << std::endl;
     for(int t=0; t<2; t++)
     {
-        m << "Team " << t << std::endl;
-        m << "  teamNumber : " << (int)teams[t].teamNumber << std::endl;
-        m << "  fieldPlayerColour : " << colorStr((int)teams[t].fieldPlayerColour) << std::endl;
-        m << "  goalkeeperColour : " << colorStr((int)teams[t].goalkeeperColour) << std::endl;
-        m << "  goalkeeper :" << (int)teams[t].goalkeeper << std::endl;
-        m << "  score : " << (int)teams[t].score << std::endl;
-        m << "  penaltyShot : " << (int)teams[t].penaltyShot << std::endl;
-        m << "  singleShots : " << (int)teams[t].singleShots << std::endl;
-        m << "  messageBudget : " << (int)teams[t].messageBudget << std::endl;
-        for(int p=0; p<playersPerTeam; p++)
+        m << "Team " << t << " (msg:"<<(int)teams[t].messageBudget<<")"<<std::endl;
+        m << "  teamNumber : " << (int)teams[t].teamNumber ;
+        m << "  / colour : " << colorStr((int)teams[t].fieldPlayerColour) ;
+        m << "  / goal : " << (int)teams[t].goalkeeper << "(" << colorStr((int)teams[t].goalkeeperColour)<< ")" << std::endl;
+        m << "  score : " << (int)teams[t].score ;
+        m << "  / penaltyShot : " << (int)teams[t].penaltyShot ;
+        m << "  / singleShots : " << (int)teams[t].singleShots << std::endl;
+        m << "substitutes: " ;
+        for(int p=0; p<MAX_NUM_PLAYERS; p++)
         {
+            if (teams[t].players[p].penalty == PENALTY_SUBSTITUTE){
+                m << p+1<<" ";
+            }
+        }
+        m<< std::endl;
+        for(int p=0; p<MAX_NUM_PLAYERS; p++)
+        {
+            if (teams[t].players[p].penalty != PENALTY_SUBSTITUTE){
             m << "  Player " << p+1 ;
             m << " penalty : " << (int)teams[t].players[p].penalty ;
             m << " | secsTillUnpenalized : " << (int)teams[t].players[p].secsTillUnpenalised;
             m << " | warnings : " << (int)teams[t].players[p].warnings;
             m << " | cautions : " << (int)teams[t].players[p].cautions << std::endl;
+            }
         }
     }   
     return m.str();

@@ -31,6 +31,9 @@ if (BUILD_REFEREE_BIN)
     add_executable (gc_dump_msg src/gc_dump_msg.cpp)
     target_link_libraries (gc_dump_msg robocup_referee pthread)
 
+    add_executable (gc_diff_msg src/gc_diff_msg.cpp)
+    target_link_libraries (gc_diff_msg robocup_referee pthread)
+
     add_executable (gc_raw_broadcast src/gc_raw_broadcast.cpp)
     target_link_libraries (gc_raw_broadcast robocup_referee pthread)
 endif ()
