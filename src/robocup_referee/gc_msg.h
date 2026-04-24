@@ -22,5 +22,6 @@ class GCMsg : public RoboCupGameControlData
 };
 
 
-std::string colorStr(uint8_t color);
+const char *colorStr(uint8_t color);
+const char *stateStr(uint8_t state);
 }

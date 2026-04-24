@@ -53,7 +53,7 @@ const TeamInfo& GCMsg::getTeam(int teamNumber) const {
     return teams[1];
 }
 
-std::string colorStr(uint8_t color)
+const char *colorStr(uint8_t color)
 {
     switch(color)
     {
@@ -79,6 +79,23 @@ case TEAM_GRAY:   return "gray";
     break;
     }
     return "?";
+}
+
+const char *stateStr(uint8_t state){
+    switch(state)
+    {
+    case STATE_INITIAL: return "initial";
+        break;
+    case STATE_READY:   return "ready";
+        break;
+    case STATE_SET:     return "set";
+        break;
+    case STATE_PLAYING: return "playing";
+        break;
+    case STATE_FINISHED:return "finished";
+        break; 
+    }
+    return "???";
 }
 
 std::string GCMsg::to_string() const
