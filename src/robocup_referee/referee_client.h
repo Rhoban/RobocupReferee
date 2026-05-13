@@ -32,6 +32,13 @@ public:
   virtual void execute(void);
   virtual bool isIPValid(const std::string &ip);
   void setState(uint8_t teamId, uint8_t myId, uint8_t message);
+
+  /**
+   * Called just before sending the return packet to the GC.
+   * Subclasses can override this to fill pose, ball and fallen fields.
+   */
+  virtual void fillReturnData(RoboCupGameControlReturnData& /*m*/) {}
+
   uint8_t _myTeamId;
   uint8_t _myId;
   uint8_t _message;

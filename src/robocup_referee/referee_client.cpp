@@ -72,9 +72,9 @@ void RefereeClient::execute(void)
       RoboCupGameControlReturnData m;
       m.teamNum = _myTeamId;
       m.playerNum = _myId;
-      m.fallen=0;
-      // other field to set: ball / pose / balle age
-    
+      m.fallen = 0;
+      fillReturnData(m); // subclass fills pose, ball, fallen
+
       send_unicast.send(gamecontroller_ip, _portSend, (unsigned char *)&m, sizeof(m));
     }
     tick(); // subclass tick call
