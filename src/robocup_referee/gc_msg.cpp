@@ -182,7 +182,6 @@ std::string GCMsg::to_string() const
             m << "  Player " << p+1 ;
             m << " penalty : " << (int)teams[t].players[p].penalty ;
             m << " | secsTillUnpenalized : " << (int)teams[t].players[p].secsTillUnpenalised;
-            m << " | warnings : " << (int)teams[t].players[p].warnings;
             m << " | cautions : " << (int)teams[t].players[p].cautions << std::endl;
             }
         }

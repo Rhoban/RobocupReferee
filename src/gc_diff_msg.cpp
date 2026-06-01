@@ -113,7 +113,6 @@ std::string diff_to_string(const GCMsg &prev, const GCMsg &msg)
             m << "  Player " << p+1 ;
             m << " penalty : " << (int)msg.teams[t].players[p].penalty ;
             m << " | secsTillUnpenalized : " << (int)msg.teams[t].players[p].secsTillUnpenalised;
-            m << " | warnings : " << (int)msg.teams[t].players[p].warnings;
             m << " | cautions : " << (int)msg.teams[t].players[p].cautions << std::endl;
             }
         }
