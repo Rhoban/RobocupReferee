@@ -32,13 +32,14 @@ void RefereeClient::start()
   thread = new std::thread(&RefereeClient::execute, this);
 }
 
-bool RefereeClient::isIPValid(const std::string &ip)
+bool RefereeClient::isIPValid(const std::string& ip)
 {
   return true;
 }
 
-
-void RefereeClient::tick(){}
+void RefereeClient::tick()
+{
+}
 
 void RefereeClient::execute(void)
 {
@@ -61,23 +62,23 @@ void RefereeClient::execute(void)
       {
         gamecontroller_ip = ip;
         buffer[n] = '\0';
-        _gamedata.update_from_message(buffer,n);
+        _gamedata.update_from_message(buffer, n);
       }
     }
 
     // Answering referee at 1hz
     if (_myId != 0 && last.elapsed_time() > 100 && gamecontroller_ip != "")
     {
-      last=TimeStamp();
+      last = TimeStamp();
       RoboCupGameControlReturnData m;
       m.teamNum = _myTeamId;
       m.playerNum = _myId;
       m.fallen = 0;
-      fillReturnData(m); // subclass fills pose, ball, fallen
+      fillReturnData(m);  // subclass fills pose, ball, fallen
 
-      send_unicast.send(gamecontroller_ip, _portSend, (unsigned char *)&m, sizeof(m));
+      send_unicast.send(gamecontroller_ip, _portSend, (unsigned char*)&m, sizeof(m));
     }
-    tick(); // subclass tick call
+    tick();  // subclass tick call
   }
 }
 
@@ -85,7 +86,7 @@ void RefereeClient::setState(uint8_t teamId, uint8_t myId, uint8_t message)
 {
   _myTeamId = teamId;
   _myId = myId;
-  _message = message ;
+  _message = message;
 }
 
 GCMsg& RefereeClient::getGameState()
