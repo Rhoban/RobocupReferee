@@ -53,7 +53,7 @@ void RefereeClient::execute(void)
 
   while (_mustQuit == false)
   {
-    usleep(1000);
+    usleep(5000);
     size_t n = 1024;
     std::string ip;
     if (broadcast.checkMessage((unsigned char*)buffer, n, &ip))
