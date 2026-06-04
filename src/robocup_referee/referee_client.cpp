@@ -15,6 +15,7 @@
 #include "robocup_referee/time_stamp.h"
 #include "rhoban_utils/sockets/udp_unicast.h"
 #include "robocup_referee/gc_msg.h"
+#include "rhoban_utils/threading/thread_stat.h"
 
 namespace robocup_referee
 {
@@ -51,9 +52,12 @@ void RefereeClient::execute(void)
   TimeStamp last;
   std::string gamecontroller_ip = "";
 
+  rhoban_utils::ThreadStat threadStat("RefereeClient");
+
   while (_mustQuit == false)
   {
     usleep(5000);
+    threadStat.update();
     size_t n = 1024;
     std::string ip;
     if (broadcast.checkMessage((unsigned char*)buffer, n, &ip))
